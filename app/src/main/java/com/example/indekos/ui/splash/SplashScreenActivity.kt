@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.example.indekos.R
 import com.example.indekos.databinding.ActivitySplashScreenBinding
 import com.example.indekos.ui.home.HomeActivity
+import com.example.indekos.ui.login.LoginActivity
 
 class SplashScreenActivity : AppCompatActivity() {
     private val binding by lazy { ActivitySplashScreenBinding.inflate(layoutInflater) }
@@ -18,6 +19,12 @@ class SplashScreenActivity : AppCompatActivity() {
             Intent(this, HomeActivity::class.java).also {
                 startActivity(it)
                 finish()
+            }
+        }
+
+        binding.btnLogin.setOnClickListener {
+            Intent(this, LoginActivity::class.java).also {
+                startActivity(it)
             }
         }
     }
