@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Button_Style_purple" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/shape_button_purple</item>
+    </style>
+</resources>
