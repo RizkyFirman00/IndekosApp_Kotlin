@@ -3,6 +3,9 @@
     <style name="Button_Style_purple" parent="Widget.AppCompat.Button">
         <item name="android:background">@drawable/shape_button_purple</item>
     </style>
+    <style name="Button_Style_salem" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/shape_button_salem</item>
+    </style>
     <style name="Button_Style_white" parent="Widget.AppCompat.Button">
         <item name="android:background">@drawable/shape_button_white_border</item>
     </style>

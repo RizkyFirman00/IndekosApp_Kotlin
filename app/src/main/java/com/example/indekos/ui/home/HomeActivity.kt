@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.example.indekos.R
 import com.example.indekos.databinding.ActivityMainBinding
 import com.example.indekos.ui.detail.DetailActivity
+import com.example.indekos.ui.login.LoginActivity
 
 class HomeActivity : AppCompatActivity() {
     override fun onBackPressed() {
@@ -19,6 +20,10 @@ class HomeActivity : AppCompatActivity() {
 
         binding.tvLocation.setOnClickListener {
             startActivity(Intent(this, DetailActivity::class.java))
+        }
+
+        binding.btnLogin.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
         }
     }
 }
