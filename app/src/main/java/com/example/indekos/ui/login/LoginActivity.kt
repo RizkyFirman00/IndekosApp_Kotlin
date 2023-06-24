@@ -1,14 +1,22 @@
 package com.example.indekos.ui.login
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.indekos.databinding.ActivityLoginBinding
 import com.example.indekos.ui.addData.AddDataActivity
 import com.example.indekos.ui.register.RegisterActivity
+import com.example.indekos.util.ViewModelFactory
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
     private val binding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
+    private val viewModel by viewModels<LoginViewModel> {
+        ViewModelFactory.getInstance(application)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,10 +30,19 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.btnLogin.setOnClickListener {
-            Intent(this, AddDataActivity::class.java).also {
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(it)
-                finish()
+            val username = binding.etUsername.text.toString()
+            val password = binding.etPassword.text.toString()
+
+            lifecycleScope.launch {
+                if (viewModel.checkCredentials(username, password)) {
+                    Intent(this@LoginActivity, AddDataActivity::class.java).also {
+                        startActivity(it)
+                        Toast.makeText(this@LoginActivity, "Selamat Datang !!!", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+                } else {
+                    Toast.makeText(this@LoginActivity, "Username atau password salah", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

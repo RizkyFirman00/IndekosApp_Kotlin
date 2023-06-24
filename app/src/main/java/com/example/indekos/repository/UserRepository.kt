@@ -25,4 +25,9 @@ class UserRepository(application: Application) {
     fun loginUser(username: String, password: String): Users {
         return _UserDao.loginUser(username, password)
     }
+
+    suspend fun getUserByUsername(username: String): Users? {
+        return _UserDao.getUserByUsername(username)
+    }
 }
+
