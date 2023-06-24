@@ -14,29 +14,29 @@ data class Indekos(
     var indekosId: Int = 0,
 
     @ColumnInfo(name = "name_indekos")
-    var name_indekos: String? = null,
+    var name_indekos: String,
 
     @ColumnInfo(name = "harga")
-    var harga: String? = null,
+    var harga: String,
 
     @ColumnInfo(name = "jumlah_bedroom")
-    var jumlah_bedroom: String? = null,
+    var jumlah_bedroom: String,
 
     @ColumnInfo(name = "jumlah_cupboard")
-    var jumlah_cupboard: String? = null,
+    var jumlah_cupboard: String,
 
     @ColumnInfo(name = "jumlah_kitchen")
-    var jumlah_kitchen: String? = null,
+    var jumlah_kitchen: String,
 
     @ColumnInfo(name = "latitude_indekos")
-    var latitude_indekos: String? = null,
+    var latitude_indekos: String,
 
     @ColumnInfo(name = "longitude_indekos")
-    var longitude_indekos: String? = null,
+    var longitude_indekos: String,
 
-    @ColumnInfo(name = "photoUrl")
-    var photoUrl: String? = null,
+    @ColumnInfo(name = "photosUrl")
+    var photoUrl: List<String>,
 
     @ColumnInfo(name = "photoBannerUrl")
-    var photoBannerUrl:String? = null,
+    var photoBannerUrl:String,
 ) : Parcelable

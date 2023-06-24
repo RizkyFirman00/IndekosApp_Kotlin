@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.indekos.databinding.ActivityLoginBinding
 import com.example.indekos.ui.addData.AddDataActivity
 import com.example.indekos.ui.register.RegisterActivity
+import com.example.indekos.util.Preferences
 import com.example.indekos.util.ViewModelFactory
 import kotlinx.coroutines.launch
 
@@ -21,6 +22,13 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        if (Preferences.checkUsername(this)) {
+            Intent(this, AddDataActivity::class.java).also {
+                startActivity(it)
+                finish()
+            }
+        }
 
         binding.btnToregister.setOnClickListener {
             Intent(this, RegisterActivity::class.java).also {
@@ -35,6 +43,7 @@ class LoginActivity : AppCompatActivity() {
 
             lifecycleScope.launch {
                 if (viewModel.checkCredentials(username, password)) {
+                    Preferences.saveUsername(username, this@LoginActivity)
                     Intent(this@LoginActivity, AddDataActivity::class.java).also {
                         startActivity(it)
                         Toast.makeText(this@LoginActivity, "Selamat Datang !!!", Toast.LENGTH_SHORT).show()
