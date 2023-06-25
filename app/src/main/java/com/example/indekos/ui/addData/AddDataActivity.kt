@@ -11,16 +11,21 @@ import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.indekos.R
 import com.example.indekos.databinding.ActivityAddDataBinding
 import com.example.indekos.ui.history.HistoryActivity
 import com.example.indekos.ui.home.HomeActivity
+import com.example.indekos.ui.login.LoginActivity
+import com.example.indekos.util.Preferences
+import com.example.indekos.util.ViewModelFactory
 import com.example.indekos.util.adapter.PhotosAdapterAdd
 import com.example.indekos.util.createCustomTempFile
 import com.example.indekos.util.uriToFile
@@ -29,6 +34,7 @@ import com.google.android.gms.location.LocationServices
 import java.io.File
 
 class AddDataActivity : AppCompatActivity() {
+
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val binding by lazy { ActivityAddDataBinding.inflate(layoutInflater) }
     private var latIndekos: Double = 0.0
@@ -37,6 +43,11 @@ class AddDataActivity : AppCompatActivity() {
     private lateinit var photoPath: String
     private lateinit var photoAdapter: PhotosAdapterAdd
     private val photoList = mutableListOf<String>()
+    private val viewModel by viewModels<AddDataViewModel> {
+        ViewModelFactory.getInstance(application)
+    }
+    private val userId by lazy { Preferences.getUserId(this@AddDataActivity) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -47,8 +58,8 @@ class AddDataActivity : AppCompatActivity() {
                 this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
             )
         }
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         getMyLocation()
         if (ActivityCompat.checkSelfPermission(
                 this, Manifest.permission.ACCESS_FINE_LOCATION
@@ -93,6 +104,16 @@ class AddDataActivity : AppCompatActivity() {
             }
         }
 
+        // Button ke logout activity
+        binding.btnLogout.setOnClickListener {
+            Preferences.logout(this)
+            Toast.makeText(this, "Selamat Tinggal", Toast.LENGTH_SHORT).show()
+            Intent(this, LoginActivity::class.java).also {
+                startActivity(it)
+                finish()
+            }
+        }
+
         // Button check lokasi
         binding.btnCheckLokasi.setOnClickListener {
             binding.etLokasi.setText("$latIndekos, $longIndekos")
@@ -125,7 +146,41 @@ class AddDataActivity : AppCompatActivity() {
             val jumlahCupboard = binding.etJumlahCupboard.text.toString()
             val jumlahKitchen = binding.etJumlahKitchen.text.toString()
 
-            Toast.makeText(this, "Data berhasil ditambahkan", Toast.LENGTH_SHORT).show()
+            if (namaIndekos.isNotEmpty() && hargaIndekos.isNotEmpty() && binding.etLokasi.text?.isNotEmpty() == true) {
+
+                if (latIndekos != null && longIndekos != null) {
+                    userId?.toInt()?.let { id ->
+                        viewModel.insertIndekos(
+                            id,
+                            namaIndekos,
+                            hargaIndekos,
+                            jumlahBedroom,
+                            jumlahCupboard,
+                            jumlahKitchen,
+                            latIndekos,
+                            longIndekos,
+                            photoList,
+                            binding.ivPhotoBanner.drawable.toBitmap().toString()
+                        )
+                    }
+
+                    Toast.makeText(this, "Data berhasil ditambahkan", Toast.LENGTH_SHORT).show()
+
+                    binding.apply {
+                        etNamaIndekos.text?.clear()
+                        etHargaPerBulan.text?.clear()
+                        etJumlahBedroom.text?.clear()
+                        etJumlahCupboard.text?.clear()
+                        etJumlahKitchen.text?.clear()
+                        etLokasi.text?.clear()
+                        etLokasi.isEnabled = true
+                    }
+                } else {
+                    Toast.makeText(this, "Lokasi tidak valid", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this, "Harap lengkapi data", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -281,7 +336,7 @@ class AddDataActivity : AppCompatActivity() {
 
     // Rv Photo Function
     private fun showPhotoSelectionDialog() {
-        val options = arrayOf<CharSequence>("Ambil dari kamera", "Ambil dari galeri", "Cancel")
+        val options = arrayOf<CharSequence>("Ambil dari kamera", "Ambil dari galeri")
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Pilih Metode Anda :")
         builder.setItems(options) { dialog, item ->
@@ -289,13 +344,14 @@ class AddDataActivity : AppCompatActivity() {
                 options[item] == "Ambil dari kamera" -> {
                     startCameraPhotos()
                 }
+
                 options[item] == "Ambil dari galeri" -> {
                     startGalleryPhotos()
                 }
-                options[item] == "Cancel" -> {
-                    dialog.dismiss()
-                }
             }
+        }
+        builder.setNegativeButton("Cancel") { dialog, _ ->
+            dialog.dismiss()
         }
         builder.show()
     }

@@ -2,6 +2,7 @@ package com.example.indekos.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -43,12 +44,16 @@ class LoginActivity : AppCompatActivity() {
 
             lifecycleScope.launch {
                 if (viewModel.checkCredentials(username, password)) {
+                    val userId = viewModel.getUserId(username)?.let { user -> Preferences.saveUserId(user, this@LoginActivity) }
+                    Log.d("LoginActivity", "Login Activity: UserId ${Preferences.getUserId(this@LoginActivity)}")
+
                     Preferences.saveUsername(username, this@LoginActivity)
-                    Intent(this@LoginActivity, AddDataActivity::class.java).also {
-                        startActivity(it)
-                        Toast.makeText(this@LoginActivity, "Selamat Datang !!!", Toast.LENGTH_SHORT).show()
-                        finish()
+                    val intent = Intent(this@LoginActivity, AddDataActivity::class.java).apply {
+                        putExtra("userId", userId.toString())
                     }
+                    Toast.makeText(this@LoginActivity, "Login berhasil", Toast.LENGTH_SHORT).show()
+                    startActivity(intent)
+                    finish()
                 } else {
                     Toast.makeText(this@LoginActivity, "Username atau password salah", Toast.LENGTH_SHORT).show()
                 }

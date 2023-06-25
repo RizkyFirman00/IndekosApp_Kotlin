@@ -8,17 +8,17 @@ import androidx.room.PrimaryKey
 data class Users(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "userId")
-    var userId: Int = 0,
+    val userId: Int = 0,
 
     @ColumnInfo(name = "email")
-    var email: String,
+    val email: String,
 
     @ColumnInfo(name = "no_telepon")
-    var noTelp: String,
+    val noTelp: String,
 
     @ColumnInfo(name = "username")
-    var username: String,
+    val username: String,
 
     @ColumnInfo(name = "password")
-    var password: String,
+    val password: String,
 )

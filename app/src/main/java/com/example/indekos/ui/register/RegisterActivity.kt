@@ -2,6 +2,7 @@ package com.example.indekos.ui.register
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.indekos.databinding.ActivityRegisterBinding
@@ -25,7 +26,7 @@ class RegisterActivity : AppCompatActivity() {
             val password = binding.etPassword.text.toString()
 
             viewModel.register(email, noTelp, username, password)
-
+            Toast.makeText(this, "Register berhasil", Toast.LENGTH_SHORT).show()
             Intent(this, LoginActivity::class.java).also {
                 startActivity(it)
                 finish()

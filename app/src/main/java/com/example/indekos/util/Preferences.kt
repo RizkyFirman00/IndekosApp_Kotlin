@@ -26,10 +26,22 @@ object Preferences {
         return username != null
     }
 
+    fun saveUserId(userId: String, context: Context){
+        val editor = editor(context, "onSignIn")
+        editor.putString("userId", userId)
+        editor.apply()
+    }
+
+    fun getUserId(context: Context): String? {
+        val sharedPref = init(context, "onSignIn")
+        return sharedPref.getString("userId", null)
+    }
+
     fun logout(context: Context){
         val editor = editor(context, "onSignIn")
         editor.remove("username")
         editor.remove("status")
+        editor.remove("userId")
         editor.apply()
     }
 }

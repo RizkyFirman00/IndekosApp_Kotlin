@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.Relation
 import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "indekos")
@@ -11,32 +12,36 @@ import kotlinx.parcelize.Parcelize
 data class Indekos(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "indekosId")
-    var indekosId: Int = 0,
+    val indekosId: Int = 0,
+
+    @ColumnInfo(name = "userId")
+    val userId: Int,
 
     @ColumnInfo(name = "name_indekos")
-    var name_indekos: String,
+    val name_indekos: String?,
 
     @ColumnInfo(name = "harga")
-    var harga: String,
+    val harga: String?,
 
     @ColumnInfo(name = "jumlah_bedroom")
-    var jumlah_bedroom: String,
+    val jumlah_bedroom: String?,
 
     @ColumnInfo(name = "jumlah_cupboard")
-    var jumlah_cupboard: String,
+    val jumlah_cupboard: String?,
 
     @ColumnInfo(name = "jumlah_kitchen")
-    var jumlah_kitchen: String,
+    val jumlah_kitchen: String?,
 
     @ColumnInfo(name = "latitude_indekos")
-    var latitude_indekos: String,
+    val latitude_indekos: Double?,
 
     @ColumnInfo(name = "longitude_indekos")
-    var longitude_indekos: String,
+    val longitude_indekos: Double?,
 
     @ColumnInfo(name = "photosUrl")
-    var photoUrl: List<String>,
+    val photoUrl: List<String>?,
 
     @ColumnInfo(name = "photoBannerUrl")
-    var photoBannerUrl:String,
+    val photoBannerUrl:String?,
+
 ) : Parcelable
