@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.example.indekos.R
 import com.example.indekos.databinding.RvPhotosDetailBinding
 
-class PhotosAdapterAdd(private val photoList: List<String>): RecyclerView.Adapter<PhotosAdapterAdd.PhotoViewHolder>() {
+class PhotosAdapterDetail(private val photoList: List<String>): RecyclerView.Adapter<PhotosAdapterDetail.PhotoViewHolder>() {
 
     private var onDeleteLongClickListener: OnPhotoDeleteLongClickListener? = null
 
@@ -38,13 +38,13 @@ class PhotosAdapterAdd(private val photoList: List<String>): RecyclerView.Adapte
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotosAdapterAdd.PhotoViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotosAdapterDetail.PhotoViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = RvPhotosDetailBinding.inflate(inflater, parent, false)
         return PhotoViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: PhotosAdapterAdd.PhotoViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PhotosAdapterDetail.PhotoViewHolder, position: Int) {
         holder.bind(photoList[position])
     }
 

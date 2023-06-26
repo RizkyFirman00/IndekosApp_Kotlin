@@ -1,11 +1,13 @@
 package com.example.indekos.repository
 
 import android.app.Application
+import androidx.lifecycle.LiveData
 import com.example.indekos.database.IndekosDao
 import com.example.indekos.database.MyAppRoomDatabase
 import com.example.indekos.database.UserDao
 import com.example.indekos.model.Indekos
 import com.example.indekos.model.Users
+import kotlinx.coroutines.flow.Flow
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -46,6 +48,9 @@ class UserRepository(application: Application) {
         jumlah_kitchen: String? = null,
         latitde_indekos: Double,
         longitude_indekos: Double,
+        alamat: String? = null,
+        kota: String? = null,
+        provinsi: String? = null,
         photoUrl: List<String>? = null,
         photoBannerUrl: String? = null
     ) {
@@ -60,10 +65,17 @@ class UserRepository(application: Application) {
                     jumlah_kitchen = jumlah_kitchen,
                     latitude_indekos = latitde_indekos,
                     longitude_indekos = longitude_indekos,
+                    alamat = alamat,
+                    kota = kota,
+                    provinsi = provinsi,
                     photoUrl = photoUrl,
                     photoBannerUrl = photoBannerUrl
                 )
             )
         }
     }
+
+    fun getAllIndekos(): Flow<List<Indekos>> = _IndekosDao.getAllIndekos()
+
+    fun getIndekosById(indekosId: Int): LiveData<Indekos> = _IndekosDao.getIndekosById(indekosId)
 }

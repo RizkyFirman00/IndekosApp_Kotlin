@@ -16,6 +16,9 @@ class AddDataViewModel(application: Application): ViewModel() {
         jumlah_kitchen: String? = null,
         latitde_indekos: Double,
         longitude_indekos: Double,
+        alamat: String? = null,
+        kota: String? = null,
+        provinsi: String? = null,
         photoUrl: List<String>? = null,
         photoBannerUrl: String? = null
     ) {
@@ -28,6 +31,9 @@ class AddDataViewModel(application: Application): ViewModel() {
             jumlah_kitchen,
             latitde_indekos,
             longitude_indekos,
+            alamat,
+            kota,
+            provinsi,
             photoUrl,
             photoBannerUrl
         )

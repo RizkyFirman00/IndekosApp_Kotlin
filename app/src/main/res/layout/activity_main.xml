@@ -63,7 +63,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:backgroundTint="@color/white"
-                        android:src="@drawable/baseline_logout_24" />
+                        android:src="@drawable/baseline_login_24_black" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -86,6 +86,7 @@
                 android:textSize="16sp" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_kost"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:listitem="@layout/rv_kost" />

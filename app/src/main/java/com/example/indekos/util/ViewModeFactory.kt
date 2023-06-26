@@ -4,6 +4,8 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.indekos.ui.addData.AddDataViewModel
+import com.example.indekos.ui.detail.DetailViewModel
+import com.example.indekos.ui.home.HomeViewModel
 import com.example.indekos.ui.login.LoginViewModel
 import com.example.indekos.ui.register.RegisterViewModel
 
@@ -30,6 +32,10 @@ class ViewModelFactory private constructor(private val mApplication: Application
             return RegisterViewModel(mApplication) as T
         } else if (modelClass.isAssignableFrom(AddDataViewModel::class.java)) {
             return AddDataViewModel(mApplication) as T
+        } else if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
+            return HomeViewModel(mApplication) as T
+        } else if (modelClass.isAssignableFrom(DetailViewModel::class.java)) {
+            return DetailViewModel(mApplication) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
     }

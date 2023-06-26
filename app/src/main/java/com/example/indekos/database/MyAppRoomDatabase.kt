@@ -27,9 +27,8 @@ abstract class MyAppRoomDatabase : RoomDatabase() {
                 synchronized(MyAppRoomDatabase::class.java) {
                     INSTANCE = Room.databaseBuilder(
                         context.applicationContext,
-                        MyAppRoomDatabase::class.java, "users_database"
+                        MyAppRoomDatabase::class.java, "myapp_database"
                     )
-                        .fallbackToDestructiveMigration()
                         .build()
                 }
             }

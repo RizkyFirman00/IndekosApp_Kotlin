@@ -38,6 +38,15 @@ data class Indekos(
     @ColumnInfo(name = "longitude_indekos")
     val longitude_indekos: Double?,
 
+    @ColumnInfo(name = "alamat")
+    val alamat: String?,
+
+    @ColumnInfo(name = "kota")
+    val kota: String?,
+
+    @ColumnInfo(name = "provinsi")
+    val provinsi: String?,
+
     @ColumnInfo(name = "photosUrl")
     val photoUrl: List<String>?,
 

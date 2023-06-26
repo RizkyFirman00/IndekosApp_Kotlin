@@ -63,6 +63,7 @@
                 android:id="@+id/etEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
                 android:fontFamily="@font/poppins_regular" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -84,6 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_regular"
+                android:maxLength="15"
                 android:inputType="phone" />
 
         </com.google.android.material.textfield.TextInputLayout>

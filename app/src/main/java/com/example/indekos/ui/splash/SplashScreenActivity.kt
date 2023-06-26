@@ -18,7 +18,6 @@ class SplashScreenActivity : AppCompatActivity() {
         binding.btnGettingStarted.setOnClickListener {
             Intent(this, HomeActivity::class.java).also {
                 startActivity(it)
-                finish()
             }
         }
 

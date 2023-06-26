@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -17,8 +18,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.indekos.R
 import com.example.indekos.databinding.ActivityAddDataBinding
 import com.example.indekos.ui.history.HistoryActivity
@@ -33,7 +34,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import java.io.File
 
-class AddDataActivity : AppCompatActivity() {
+class AddDataActivity : AppCompatActivity(), PhotosAdapterAdd.OnPhotoDeleteLongClickListener {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val binding by lazy { ActivityAddDataBinding.inflate(layoutInflater) }
@@ -145,6 +146,10 @@ class AddDataActivity : AppCompatActivity() {
             val jumlahBedroom = binding.etJumlahBedroom.text.toString()
             val jumlahCupboard = binding.etJumlahCupboard.text.toString()
             val jumlahKitchen = binding.etJumlahKitchen.text.toString()
+            val alamat = binding.etAlamat.text.toString()
+            val kota = binding.etKota.text.toString()
+            val provinsi = binding.etProvinsi.text.toString()
+            val file = file.toString()
 
             if (namaIndekos.isNotEmpty() && hargaIndekos.isNotEmpty() && binding.etLokasi.text?.isNotEmpty() == true) {
 
@@ -159,9 +164,13 @@ class AddDataActivity : AppCompatActivity() {
                             jumlahKitchen,
                             latIndekos,
                             longIndekos,
+                            alamat,
+                            kota,
+                            provinsi,
                             photoList,
-                            binding.ivPhotoBanner.drawable.toBitmap().toString()
+                            file
                         )
+                        Log.d("AddDataActivity", "Banner: $file")
                     }
 
                     Toast.makeText(this, "Data berhasil ditambahkan", Toast.LENGTH_SHORT).show()
@@ -172,8 +181,11 @@ class AddDataActivity : AppCompatActivity() {
                         etJumlahBedroom.text?.clear()
                         etJumlahCupboard.text?.clear()
                         etJumlahKitchen.text?.clear()
+                        etAlamat.text?.clear()
                         etLokasi.text?.clear()
+                        ivPhotoBanner.setImageResource(R.drawable.null_image)
                         etLokasi.isEnabled = true
+                        photoList.clear()
                     }
                 } else {
                     Toast.makeText(this, "Lokasi tidak valid", Toast.LENGTH_SHORT).show()
@@ -181,7 +193,17 @@ class AddDataActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Harap lengkapi data", Toast.LENGTH_SHORT).show()
             }
+            photoList.clear()
         }
+    }
+
+    override fun onPhotoDeleteLongClick(position: Int) {
+        val deletedPhoto = photoList.removeAt(position)
+        deletedPhoto?.let {
+            val deletedPhotoFile = File(it)
+            deletedPhotoFile.delete()
+        }
+        photoAdapter.notifyItemRemoved(position)
     }
 
     //Location Function
@@ -260,7 +282,9 @@ class AddDataActivity : AppCompatActivity() {
             val myFile = File(photoPath)
             file = myFile
             val result = BitmapFactory.decodeFile(myFile.path)
-            binding.ivPhotoBanner.setImageBitmap(result)
+            Glide.with(this)
+                .load(result)
+                .into(binding.ivPhotoBanner)
         }
     }
 
@@ -285,7 +309,6 @@ class AddDataActivity : AppCompatActivity() {
         if (it.resultCode == RESULT_OK) {
             val myFile = File(photoPath)
             file = myFile
-            val result = BitmapFactory.decodeFile(myFile.path)
             val photoFilePath = myFile.absolutePath
             photoList.add(photoFilePath)
             photoAdapter.notifyDataSetChanged()
@@ -308,7 +331,9 @@ class AddDataActivity : AppCompatActivity() {
             val selectedImg: Uri = it.data?.data as Uri
             val myFile = uriToFile(selectedImg, this)
             file = myFile
-            binding.ivPhotoBanner.setImageURI(selectedImg)
+            Glide.with(this)
+                .load(selectedImg)
+                .into(binding.ivPhotoBanner)
         }
     }
 
