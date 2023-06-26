@@ -34,7 +34,7 @@
         <ImageView
             android:id="@+id/iv_photo_banner_detail"
             android:layout_width="match_parent"
-            android:layout_height="310dp"
+            android:layout_height="350dp"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,6 +42,7 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <LinearLayout
+            android:id="@+id/cardDetail"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="-20dp"
@@ -99,13 +100,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_light"
-                    android:text=" / month" />
+                    android:text=" / Bulan" />
             </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="30dp"
                 android:fontFamily="@font/poppins_medium"
                 android:text="Main Facilities"
                 android:textSize="16sp" />
@@ -131,6 +132,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
                         android:layout_gravity="start">
 
                         <TextView
@@ -169,6 +171,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
                         android:layout_gravity="start">
 
                         <TextView
@@ -206,6 +209,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
                         android:layout_gravity="start">
 
                         <TextView

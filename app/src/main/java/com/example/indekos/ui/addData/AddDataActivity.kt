@@ -9,7 +9,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -308,7 +307,6 @@ class AddDataActivity : AppCompatActivity(), PhotosAdapterAdd.OnPhotoDeleteLongC
     ) {
         if (it.resultCode == RESULT_OK) {
             val myFile = File(photoPath)
-            file = myFile
             val photoFilePath = myFile.absolutePath
             photoList.add(photoFilePath)
             photoAdapter.notifyDataSetChanged()
@@ -352,7 +350,6 @@ class AddDataActivity : AppCompatActivity(), PhotosAdapterAdd.OnPhotoDeleteLongC
         if (it.resultCode == RESULT_OK) {
             val selectedImg: Uri = it.data?.data as Uri
             val myFile = uriToFile(selectedImg, this)
-            file = myFile
             val photoFilePath = myFile.absolutePath
             photoList.add(photoFilePath)
             photoAdapter.notifyDataSetChanged()

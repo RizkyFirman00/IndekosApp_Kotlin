@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.ViewTreeObserver
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,13 +23,25 @@ class DetailActivity : AppCompatActivity() {
         ViewModelFactory.getInstance(application)
     }
 
+    private var bannerHeight = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         supportActionBar?.hide()
 
+        binding.ivPhotoBannerDetail.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
+            override fun onPreDraw(): Boolean {
+                binding.ivPhotoBannerDetail.viewTreeObserver.removeOnPreDrawListener(this)
+                bannerHeight = binding.ivPhotoBannerDetail.height
+                return true
+            }
+        })
+
         viewModel.getByIndekosId(indekosId!!.toInt()).observe(this) {
+
             Log.d("DetailActivity", "onCreate: $it")
+
             binding.tvNameDetail.text = it.name_indekos
             binding.tvPriceValue.text = it.harga
             binding.tvBedroomValue.text = it.jumlah_bedroom
@@ -40,7 +53,10 @@ class DetailActivity : AppCompatActivity() {
             Glide.with(this)
                 .load(it.photoBannerUrl)
                 .into(binding.ivPhotoBannerDetail)
+
+            Log.d("DetailActivity", "Banner: ${it.photoBannerUrl}")
             Log.d("DetailActivity", "Banner: ${it.photoUrl}")
+
             it.photoUrl?.let { urlPhoto -> photoList.addAll(urlPhoto) }
             photoAdapter = PhotosAdapterDetail(photoList)
             binding.rvPhotosDetail.apply {
@@ -58,7 +74,12 @@ class DetailActivity : AppCompatActivity() {
 
         binding.clDetail.viewTreeObserver.addOnScrollChangedListener {
             val scrollY = binding.clDetail.scrollY
-            binding.ivPhotoBannerDetail.translationY = scrollY.toFloat() / 2
+            // Move the cardDetail up
+            binding.cardDetail.translationY = -scrollY.toFloat() / 2
+            // Shrink the bannerDetail
+            val scale = 1 - scrollY.toFloat() / (bannerHeight * 2)
+            binding.ivPhotoBannerDetail.scaleX = scale
+            binding.ivPhotoBannerDetail.scaleY = scale
         }
     }
 }
