@@ -8,7 +8,10 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -51,6 +54,67 @@ class AddDataActivity : AppCompatActivity(), PhotosAdapterAdd.OnPhotoDeleteLongC
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        val etHargaPerBulan: EditText = binding.etHargaPerBulan
+        etHargaPerBulan.addTextChangedListener(object : TextWatcher {
+            private var isUpdating = false
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                if (isUpdating) {
+                    return
+                }
+
+                isUpdating = true
+
+                val originalText = s.toString()
+
+                // Hapus semua tanda titik sebelum memformat angka
+                val cleanText = originalText.replace(".", "")
+
+                // Format ulang angka dengan menambahkan titik setiap 3 angka
+                val formattedText = formatCurrency(cleanText)
+
+                // Set teks yang telah diformat ke EditText
+                etHargaPerBulan.setText(formattedText)
+
+                // Posisikan kursor di akhir teks
+                etHargaPerBulan.setSelection(formattedText.length)
+
+                isUpdating = false
+            }
+
+            private fun formatCurrency(value: String): String {
+                // Hapus tanda minus jika ada
+                var isNegative = false
+                var cleanValue = value
+                if (cleanValue.startsWith("-")) {
+                    isNegative = true
+                    cleanValue = cleanValue.substring(1)
+                }
+
+                // Format ulang angka dengan menambahkan titik setiap 3 angka
+                val stringBuilder = StringBuilder(cleanValue)
+                val length = stringBuilder.length
+                var i = length - 3
+                while (i > 0) {
+                    stringBuilder.insert(i, ".")
+                    i -= 3
+                }
+
+                // Tambahkan tanda minus kembali jika angka negatif
+                if (isNegative) {
+                    stringBuilder.insert(0, "-")
+                }
+
+                return stringBuilder.toString()
+            }
+        })
 
         // Request location permissions if not granted
         if (!allPermissionsGranted()) {
