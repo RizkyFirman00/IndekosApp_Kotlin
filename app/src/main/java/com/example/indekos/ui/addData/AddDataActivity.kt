@@ -11,7 +11,9 @@ import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -20,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.view.isNotEmpty
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.indekos.R
@@ -54,7 +57,9 @@ class AddDataActivity : AppCompatActivity(), PhotosAdapterAdd.OnPhotoDeleteLongC
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        supportActionBar?.hide()
 
+        // Logika Currency Formatter
         val etHargaPerBulan: EditText = binding.etHargaPerBulan
         etHargaPerBulan.addTextChangedListener(object : TextWatcher {
             private var isUpdating = false
@@ -88,7 +93,6 @@ class AddDataActivity : AppCompatActivity(), PhotosAdapterAdd.OnPhotoDeleteLongC
 
                 isUpdating = false
             }
-
             private fun formatCurrency(value: String): String {
                 // Hapus tanda minus jika ada
                 var isNegative = false
@@ -182,7 +186,7 @@ class AddDataActivity : AppCompatActivity(), PhotosAdapterAdd.OnPhotoDeleteLongC
         binding.btnCheckLokasi.setOnClickListener {
             binding.etLokasi.setText("$latIndekos, $longIndekos")
             binding.etLokasi.isEnabled = false
-            Log.d("CheckAddDataActivity", "onCreate: $latIndekos, $longIndekos")
+            Toast.makeText(this, "Lokasi berhasil diambil", Toast.LENGTH_SHORT).show()
         }
 
         // Button tambah foto banner
@@ -245,8 +249,9 @@ class AddDataActivity : AppCompatActivity(), PhotosAdapterAdd.OnPhotoDeleteLongC
                         etJumlahCupboard.text?.clear()
                         etJumlahKitchen.text?.clear()
                         etAlamat.text?.clear()
+                        etKota.text?.clear()
+                        etProvinsi.text?.clear()
                         etLokasi.text?.clear()
-                        ivPhotoBanner.setImageResource(R.drawable.null_image)
                         etLokasi.isEnabled = true
                         photoList.clear()
                     }

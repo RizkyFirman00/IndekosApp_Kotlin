@@ -24,6 +24,7 @@ class SplashScreenActivity : AppCompatActivity() {
         binding.btnLogin.setOnClickListener {
             Intent(this, LoginActivity::class.java).also {
                 startActivity(it)
+                finish()
             }
         }
     }

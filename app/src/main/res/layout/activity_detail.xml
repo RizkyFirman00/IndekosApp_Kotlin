@@ -79,7 +79,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
                     android:fontFamily="@font/poppins_medium"
@@ -89,7 +89,7 @@
 
                 <TextView
                     android:id="@+id/tv_price_value"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
                     android:text="2.500.000"
@@ -97,7 +97,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_light"
                     android:text=" / Bulan" />
@@ -108,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Main Facilities"
+                android:text="Fasilitas Umum"
                 android:textSize="16sp" />
 
             <LinearLayout
@@ -239,7 +239,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Photos"
+                android:text="Foto Kosan"
                 android:textSize="16sp" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -256,7 +256,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Location"
+                android:text="Alamat Kosan"
                 android:textSize="16sp" />
 
             <LinearLayout
@@ -312,6 +312,7 @@
                 </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/btn_maps"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center_vertical"
@@ -321,10 +322,11 @@
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_hubungi_penjual"
                 android:layout_width="210dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="40dp"
                 android:background="@drawable/shape_button_purple"
                 android:fontFamily="@font/poppins_medium"
                 android:text="Hubungi Penjual"

@@ -74,6 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:hint="No. Telepon"
+            app:prefixText="+"
             app:boxCornerRadiusBottomEnd="15dp"
             app:boxCornerRadiusBottomStart="15dp"
             app:boxCornerRadiusTopEnd="15dp"

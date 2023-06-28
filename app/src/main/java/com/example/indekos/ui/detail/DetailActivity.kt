@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewTreeObserver
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +20,10 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var photoAdapter: PhotosAdapterDetail
     private var photoList = mutableListOf<String>()
     private val indekosId by lazy { intent.getStringExtra("indekosId") }
+    private var userId: Int? = null
+    private var latitude: Double = 0.0
+    private var longitude: Double = 0.0
+    private var label: String = ""
     private val viewModel by viewModels<DetailViewModel> {
         ViewModelFactory.getInstance(application)
     }
@@ -38,11 +43,26 @@ class DetailActivity : AppCompatActivity() {
             }
         })
 
+        binding.btnMaps.setOnClickListener {
+            val gmmIntentUri = Uri.parse("geo:$latitude,$longitude?q=$latitude,$longitude($label)")
+            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+            mapIntent.setPackage("com.google.android.apps.maps")
+            startActivity(mapIntent)
+        }
+
         viewModel.getByIndekosId(indekosId!!.toInt()).observe(this) {
 
             Log.d("DetailActivity", "onCreate: $it")
 
             binding.tvNameDetail.text = it.name_indekos
+            val name = it.name_indekos
+            if (name != null) {
+                label = name
+            }
+            val id = it.userId
+            if (id != null) {
+                userId = id
+            }
             binding.tvPriceValue.text = it.harga
             binding.tvBedroomValue.text = it.jumlah_bedroom
             binding.tvCupboardValue.text = it.jumlah_cupboard
@@ -53,6 +73,15 @@ class DetailActivity : AppCompatActivity() {
             Glide.with(this)
                 .load(it.photoBannerUrl)
                 .into(binding.ivPhotoBannerDetail)
+
+            val lat = it.latitude_indekos
+            if (lat != null) {
+                latitude = lat
+            }
+            val lng = it.longitude_indekos
+            if (lng != null) {
+                longitude = lng
+            }
 
             Log.d("DetailActivity", "Banner: ${it.photoBannerUrl}")
             Log.d("DetailActivity", "Banner: ${it.photoUrl}")
@@ -69,6 +98,23 @@ class DetailActivity : AppCompatActivity() {
             Intent(this, HomeActivity::class.java).also {
                 startActivity(it)
                 finish()
+            }
+        }
+
+        binding.btnHubungiPenjual.setOnClickListener {
+            if (userId != null) {
+                viewModel.getUserById(userId!!).observe(this) { user ->
+                    val phoneNumber = user.noTelp
+                    val name = user.username
+                    val message = "Halo $name, saya tertarik dengan kosan anda\nApakah masih tersedia ???."
+
+                    val intent = Intent(Intent.ACTION_VIEW)
+                    intent.data = Uri.parse("https://api.whatsapp.com/send?phone=$phoneNumber&text=${Uri.encode(message)}")
+                    startActivity(intent)
+                }
+            }
+            else {
+                Toast.makeText(this, "Tidak ditemukan nomor telepon", Toast.LENGTH_SHORT).show()
             }
         }
 

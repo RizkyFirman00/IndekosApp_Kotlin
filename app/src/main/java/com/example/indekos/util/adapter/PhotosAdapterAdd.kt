@@ -10,31 +10,12 @@ import com.example.indekos.databinding.RvPhotosDetailBinding
 
 class PhotosAdapterAdd(private val photoList: List<String>): RecyclerView.Adapter<PhotosAdapterAdd.PhotoViewHolder>() {
 
-    private var onDeleteLongClickListener: OnPhotoDeleteLongClickListener? = null
-
-    fun setOnPhotoDeleteLongClickListener(listener: OnPhotoDeleteLongClickListener) {
-        onDeleteLongClickListener = listener
-    }
-
-    inner class PhotoViewHolder(private val binding: RvPhotosDetailBinding) : RecyclerView.ViewHolder(binding.root), View.OnLongClickListener {
-
-        init {
-            binding.root.setOnLongClickListener(this)
-        }
+    inner class PhotoViewHolder(private val binding: RvPhotosDetailBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(photoFilePath: String) {
             Glide.with(itemView.context)
                 .load(photoFilePath)
                 .into(binding.imgItemPhoto)
-        }
-
-        override fun onLongClick(v: View?): Boolean {
-            val position = adapterPosition
-            if (position != RecyclerView.NO_POSITION) {
-                onDeleteLongClickListener?.onPhotoDeleteLongClick(position)
-                return true
-            }
-            return false
         }
     }
 

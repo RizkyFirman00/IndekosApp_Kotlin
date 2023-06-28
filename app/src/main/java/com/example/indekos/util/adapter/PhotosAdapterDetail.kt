@@ -10,10 +10,14 @@ import com.example.indekos.databinding.RvPhotosDetailBinding
 
 class PhotosAdapterDetail(private val photoList: List<String>): RecyclerView.Adapter<PhotosAdapterDetail.PhotoViewHolder>() {
 
-    private var onDeleteLongClickListener: OnPhotoDeleteLongClickListener? = null
+    private var onItemLongClickListener: OnItemLongClickListener? = null
 
-    fun setOnPhotoDeleteLongClickListener(listener: OnPhotoDeleteLongClickListener) {
-        onDeleteLongClickListener = listener
+    fun setOnPhotoDeleteLongClickListener(listener: OnItemLongClickListener) {
+        onItemLongClickListener = listener
+    }
+
+    interface OnItemLongClickListener {
+        fun onItemLongClick(position: Int)
     }
 
     inner class PhotoViewHolder(private val binding: RvPhotosDetailBinding) : RecyclerView.ViewHolder(binding.root), View.OnLongClickListener {
@@ -31,7 +35,7 @@ class PhotosAdapterDetail(private val photoList: List<String>): RecyclerView.Ada
         override fun onLongClick(v: View?): Boolean {
             val position = adapterPosition
             if (position != RecyclerView.NO_POSITION) {
-                onDeleteLongClickListener?.onPhotoDeleteLongClick(position)
+                onItemLongClickListener?.onItemLongClick(position)
                 return true
             }
             return false

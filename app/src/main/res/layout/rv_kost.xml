@@ -11,6 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="start|center_vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -68,7 +69,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="5dp"
                         android:fontFamily="@font/poppins_medium"
@@ -78,7 +79,7 @@
 
                     <TextView
                         android:id="@+id/tv_price_value"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_medium"
                         android:text="2.500.000"
@@ -86,43 +87,20 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_light"
                         android:text=" / bulan" />
                 </LinearLayout>
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tv_jarak"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="13dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                    android:fontFamily="@font/poppins_light"
+                    android:text="500"
+                    tools:text="500 m"/>
 
-                    <TextView
-                        android:id="@+id/tv_kota"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_light"
-                        android:text="Jakarta Timur"
-                        android:textSize="11sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="5dp"
-                        android:fontFamily="@font/poppins_light"
-                        android:text=","
-                        android:textSize="11sp" />
-
-                    <TextView
-                        android:id="@+id/tv_provinsi"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_light"
-                        android:text="DKI Jakarta"
-                        android:textSize="11sp" />
-                </LinearLayout>
             </LinearLayout>
 
         </RelativeLayout>

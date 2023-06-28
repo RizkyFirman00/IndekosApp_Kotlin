@@ -39,6 +39,10 @@ class UserRepository(application: Application) {
         return _UserDao.getUserByUsername(username)
     }
 
+    fun getUserById(userId: Int): LiveData<Users> {
+        return _UserDao.getUserById(userId)
+    }
+
     fun insertIndekos(
         userId: Int,
         namaIndekos: String,
@@ -78,4 +82,50 @@ class UserRepository(application: Application) {
     fun getAllIndekos(): Flow<List<Indekos>> = _IndekosDao.getAllIndekos()
 
     fun getIndekosById(indekosId: Int): LiveData<Indekos> = _IndekosDao.getIndekosById(indekosId)
+
+    fun getIndekosByUserId(userId: Int): Flow<List<Indekos>> = _IndekosDao.getIndekosByUserId(userId)
+
+    fun updateIndekos(
+        indekosId: Int,
+        userId: Int,
+        namaIndekos: String,
+        harga: String,
+        jumlah_bedroom: String? = null,
+        jumlah_cupboard: String? = null,
+        jumlah_kitchen: String? = null,
+        latitde_indekos: Double,
+        longitude_indekos: Double,
+        alamat: String? = null,
+        kota: String? = null,
+        provinsi: String? = null,
+        photoUrl: List<String>? = null,
+        photoBannerUrl: String? = null
+    ) {
+        executorService.execute {
+            _IndekosDao.updateIndekos(
+                Indekos(
+                    indekosId = indekosId,
+                    userId = userId,
+                    name_indekos = namaIndekos,
+                    harga = harga,
+                    jumlah_bedroom = jumlah_bedroom,
+                    jumlah_cupboard = jumlah_cupboard,
+                    jumlah_kitchen = jumlah_kitchen,
+                    latitude_indekos = latitde_indekos,
+                    longitude_indekos = longitude_indekos,
+                    alamat = alamat,
+                    kota = kota,
+                    provinsi = provinsi,
+                    photoUrl = photoUrl,
+                    photoBannerUrl = photoBannerUrl
+                )
+            )
+        }
+    }
+
+    fun deleteIndekos(indekosId: Int) {
+        executorService.execute {
+            _IndekosDao.deleteIndekos(indekosId)
+        }
+    }
 }

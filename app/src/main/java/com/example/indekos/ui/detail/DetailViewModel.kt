@@ -8,4 +8,6 @@ class DetailViewModel(application: Application): ViewModel() {
     private val userRepository = UserRepository(application)
 
     fun getByIndekosId(indekosId: Int) = userRepository.getIndekosById(indekosId)
+
+    fun getUserById(userId: Int) = userRepository.getUserById(userId)
 }
