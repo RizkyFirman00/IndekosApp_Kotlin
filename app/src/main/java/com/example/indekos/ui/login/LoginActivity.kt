@@ -10,11 +10,19 @@ import androidx.lifecycle.lifecycleScope
 import com.example.indekos.databinding.ActivityLoginBinding
 import com.example.indekos.ui.addData.AddDataActivity
 import com.example.indekos.ui.register.RegisterActivity
+import com.example.indekos.ui.splash.SplashScreenActivity
 import com.example.indekos.util.Preferences
 import com.example.indekos.util.ViewModelFactory
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
+
+    override fun onBackPressed() {
+        val intent = Intent(this, SplashScreenActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
     private val binding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
     private val viewModel by viewModels<LoginViewModel> {
         ViewModelFactory.getInstance(application)

@@ -93,6 +93,7 @@ class AddDataActivity : AppCompatActivity(), PhotosAdapterAdd.OnPhotoDeleteLongC
 
                 isUpdating = false
             }
+
             private fun formatCurrency(value: String): String {
                 // Hapus tanda minus jika ada
                 var isNegative = false

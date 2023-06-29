@@ -1,9 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.map.MapsActivity" />
+    tools:context=".ui.map.MapsActivity">
+
+    <include
+        android:id="@+id/dialog_button"
+        layout="@layout/dialog_set_radius"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        map:layout_constraintBottom_toBottomOf="parent"
+        map:layout_constraintEnd_toEndOf="parent"
+        map:layout_constraintStart_toStartOf="parent"
+        map:layout_constraintTop_toTopOf="parent" />
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        map:layout_constraintBottom_toBottomOf="parent"
+        map:layout_constraintEnd_toEndOf="parent"
+        map:layout_constraintStart_toStartOf="parent"
+        map:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:elevation="8dp"
+        android:fontFamily="@font/poppins_regular"
+        android:hint="Cari Lokasi"
+        android:textSize="14sp"
+        app:boxCornerRadiusBottomEnd="15dp"
+        app:boxCornerRadiusBottomStart="15dp"
+        app:boxCornerRadiusTopEnd="15dp"
+        app:boxCornerRadiusTopStart="15dp"
+        app:boxStrokeColor="@color/purple"
+        app:boxStrokeWidth="2dp"
+        app:endIconMode="clear_text"
+        map:boxBackgroundColor="@color/white"
+        map:endIconCheckable="true"
+        map:layout_constraintEnd_toStartOf="@+id/btn_search"
+        map:layout_constraintStart_toStartOf="parent"
+        map:layout_constraintTop_toTopOf="@+id/map">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btn_search"
+        style="@style/Button_Style_purple"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/baseline_search_24_white"
+        map:layout_constraintBottom_toBottomOf="@+id/textInputLayout"
+        map:layout_constraintEnd_toEndOf="parent"
+        map:layout_constraintTop_toTopOf="@+id/textInputLayout" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_set_radius"
+        style="@style/Button_Style_purple"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:layout_marginHorizontal="20dp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Set Radius"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        map:layout_constraintBottom_toBottomOf="@+id/map"
+        map:layout_constraintEnd_toEndOf="parent"
+        map:layout_constraintStart_toStartOf="parent" />
+
+<!--    <androidx.appcompat.widget.AppCompatImageButton-->
+<!--        android:id="@+id/btn_myLocation"-->
+<!--        style="@style/Button_Style_salem"-->
+<!--        android:layout_width="60dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        android:layout_marginBottom="50dp"-->
+<!--        android:fontFamily="@font/poppins_medium"-->
+<!--        android:src="@drawable/baseline_location_searching_24"-->
+<!--        android:textAllCaps="false"-->
+<!--        android:textSize="16sp"-->
+<!--        map:layout_constraintBottom_toTopOf="@+id/btn_set_radius"-->
+<!--        map:layout_constraintEnd_toEndOf="parent" />-->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

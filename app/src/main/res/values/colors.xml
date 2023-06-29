@@ -6,4 +6,5 @@
     <color name="salem">#FF9376</color>
     <color name="gray">#33000000</color>
     <color name="red">#F31313</color>
+    <color name="transparent_white">#80FFFFFF</color>
 </resources>

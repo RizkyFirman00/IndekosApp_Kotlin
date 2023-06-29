@@ -9,6 +9,11 @@ import com.example.indekos.ui.home.HomeActivity
 import com.example.indekos.ui.login.LoginActivity
 
 class SplashScreenActivity : AppCompatActivity() {
+
+    override fun onBackPressed() {
+        finish()
+    }
+
     private val binding by lazy { ActivitySplashScreenBinding.inflate(layoutInflater) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,6 +23,7 @@ class SplashScreenActivity : AppCompatActivity() {
         binding.btnGettingStarted.setOnClickListener {
             Intent(this, HomeActivity::class.java).also {
                 startActivity(it)
+                finish()
             }
         }
 

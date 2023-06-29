@@ -13,6 +13,14 @@ import com.example.indekos.util.ViewModelFactory
 import com.example.indekos.util.adapter.IndekosHistoryAdapter
 
 class HistoryActivity : AppCompatActivity() {
+
+    override fun onBackPressed() {
+        Intent(this, AddDataActivity::class.java).also {
+            startActivity(it)
+            finish()
+        }
+    }
+
     private val userId by lazy { Preferences.getUserId(this@HistoryActivity) }
     private val binding by lazy { ActivityHistoryBinding.inflate(layoutInflater) }
     private lateinit var adapter: IndekosHistoryAdapter

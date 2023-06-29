@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.indekos.databinding.ActivityMainBinding
 import com.example.indekos.model.Indekos
 import com.example.indekos.ui.detail.DetailActivity
+import com.example.indekos.ui.map.MapsActivity
 import com.example.indekos.ui.splash.SplashScreenActivity
 import com.example.indekos.util.ViewModelFactory
 import com.example.indekos.util.adapter.IndekosHomeAdapter
@@ -29,8 +30,10 @@ import kotlin.math.cos
 import kotlin.math.pow
 import kotlin.math.sin
 import kotlin.math.sqrt
+import kotlin.properties.Delegates
 
 class HomeActivity : AppCompatActivity() {
+
     override fun onBackPressed() {
         val intent = Intent(this, SplashScreenActivity::class.java)
         startActivity(intent)
@@ -75,6 +78,24 @@ class HomeActivity : AppCompatActivity() {
 
         getAccessLocation()
 
+        binding.btnOtherLocation.setOnClickListener {
+            if (latUser != null && longUser != null) {
+                val intent = Intent(this, MapsActivity::class.java)
+                intent.putExtra("latUser", latUser)
+                intent.putExtra("longUser", longUser)
+                Log.d("HomeActivity", "Check location: $latUser, $longUser")
+                stopLocationUpdates()
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "Tidak dapat mengambil lokasi pengguna", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        binding.btnMyLocation.setOnClickListener {
+            startLocationUpdates()
+            Toast.makeText(this, "Lokasi Anda diperbarui : Lokasi terkini", Toast.LENGTH_SHORT).show()
+        }
+
         adapter = IndekosHomeAdapter(
             onItemClick = {
                 navigateToDetailActivity(it)
@@ -83,7 +104,6 @@ class HomeActivity : AppCompatActivity() {
         )
         binding.rvKost.adapter = adapter
         binding.rvKost.layoutManager = LinearLayoutManager(this)
-
         viewModel.getAllIndekos()
         viewModel.indekosList.observe(this) { indekosList ->
             if (indekosList.isNullOrEmpty()) {
@@ -96,14 +116,14 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        startLocationUpdates()
-    }
-
     override fun onPause() {
         super.onPause()
         stopLocationUpdates()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        startLocationUpdates()
     }
 
     private fun startLocationUpdates() {

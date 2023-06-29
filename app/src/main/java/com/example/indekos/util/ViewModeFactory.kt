@@ -10,6 +10,7 @@ import com.example.indekos.ui.detailHistory.DetailHistoryViewModel
 import com.example.indekos.ui.history.HistoryViewModel
 import com.example.indekos.ui.home.HomeViewModel
 import com.example.indekos.ui.login.LoginViewModel
+import com.example.indekos.ui.map.MapsViewModel
 import com.example.indekos.ui.register.RegisterViewModel
 
 class ViewModelFactory private constructor(private val mApplication: Application) : ViewModelProvider.NewInstanceFactory() {
@@ -43,6 +44,8 @@ class ViewModelFactory private constructor(private val mApplication: Application
             return HistoryViewModel(mApplication) as T
         } else if (modelClass.isAssignableFrom(DetailHistoryViewModel::class.java)) {
             return DetailHistoryViewModel(mApplication) as T
+        } else if (modelClass.isAssignableFrom(MapsViewModel::class.java)) {
+            return MapsViewModel(mApplication) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
     }
