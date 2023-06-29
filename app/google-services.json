@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "621965416931",
+    "project_id": "inndekos-89227",
+    "storage_bucket": "inndekos-89227.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:621965416931:android:76d718c8dc23e395da28d6",
+        "android_client_info": {
+          "package_name": "com.example.indekos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "621965416931-dla05mp14fkqi7ses8i7ilskd8od4k6l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBci2-flDbOgqr5ixLwm-nWB2HOvWUMkdE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "621965416931-dla05mp14fkqi7ses8i7ilskd8od4k6l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
