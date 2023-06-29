@@ -175,7 +175,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 true // Tampilkan semua indekos jika radius belum diatur
             } else {
                 val distance = calculateDistance(userLocation, indekosLocation)
-                distance <= radiusValue!! // Filter indekos yang berjarak kurang dari atau sama dengan radius yang diinginkan
+                distance <= radiusValue // Filter indekos yang berjarak kurang dari atau sama dengan radius yang diinginkan
             }
         }?.toMutableList()
         if (filteredIndekosList.isNullOrEmpty()) {

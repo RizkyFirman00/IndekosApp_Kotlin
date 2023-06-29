@@ -12,7 +12,7 @@ class LoginViewModel(application: Application) : ViewModel() {
         return user != null && user.password == password
     }
 
-    suspend fun getUserId(username: String): String? {
+    suspend fun getUserId(username: String): String {
         val user = userRepository.getUserByUsername(username)
         return user?.userId.toString()
     }

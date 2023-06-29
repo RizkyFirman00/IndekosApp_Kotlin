@@ -268,7 +268,7 @@ class AddDataActivity : AppCompatActivity(), PhotosAdapterAdd.OnPhotoDeleteLongC
 
     override fun onPhotoDeleteLongClick(position: Int) {
         val deletedPhoto = photoList.removeAt(position)
-        deletedPhoto?.let {
+        deletedPhoto.let {
             val deletedPhotoFile = File(it)
             deletedPhotoFile.delete()
         }

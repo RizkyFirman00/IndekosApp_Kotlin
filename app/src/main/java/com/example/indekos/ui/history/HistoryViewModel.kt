@@ -19,7 +19,7 @@ class HistoryViewModel(application: Application) : ViewModel() {
     fun getByUserId(userId: Int) {
         viewModelScope.launch {
             userRepository.getIndekosByUserId(userId)
-                .collect() { indekos ->
+                .collect { indekos ->
                     _indekosList.value = indekos
                 }
         }
