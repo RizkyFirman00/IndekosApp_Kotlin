@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -25,6 +26,7 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import kotlinx.coroutines.flow.observeOn
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.pow
@@ -108,9 +110,9 @@ class HomeActivity : AppCompatActivity() {
         viewModel.indekosList.observe(this) { indekosList ->
             if (indekosList.isNullOrEmpty()) {
                 Toast.makeText(this, "Tidak ada data indekos", Toast.LENGTH_SHORT).show()
-                binding.tvNoData.visibility = android.view.View.VISIBLE
+                binding.tvNoData.visibility = View.VISIBLE
             } else {
-                binding.tvNoData.visibility = android.view.View.GONE
+                binding.tvNoData.visibility = View.GONE
                 adapter.submitList(indekosList)
             }
         }

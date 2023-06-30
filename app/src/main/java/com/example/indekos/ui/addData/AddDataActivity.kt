@@ -23,6 +23,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.view.isNotEmpty
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.indekos.R
@@ -37,9 +38,10 @@ import com.example.indekos.util.createCustomTempFile
 import com.example.indekos.util.uriToFile
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import kotlinx.coroutines.launch
 import java.io.File
 
-class AddDataActivity : AppCompatActivity(), PhotosAdapterAdd.OnPhotoDeleteLongClickListener {
+class AddDataActivity : AppCompatActivity() {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val binding by lazy { ActivityAddDataBinding.inflate(layoutInflater) }
@@ -58,6 +60,14 @@ class AddDataActivity : AppCompatActivity(), PhotosAdapterAdd.OnPhotoDeleteLongC
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         supportActionBar?.hide()
+
+        lifecycleScope.launch {
+            userId?.let {
+                viewModel.getUsernamebyId(it.toInt()).observe(this@AddDataActivity) {
+                    binding.tvUsername.text = it.username
+                }
+            }
+        }
 
         // Logika Currency Formatter
         val etHargaPerBulan: EditText = binding.etHargaPerBulan
@@ -254,6 +264,7 @@ class AddDataActivity : AppCompatActivity(), PhotosAdapterAdd.OnPhotoDeleteLongC
                         etProvinsi.text?.clear()
                         etLokasi.text?.clear()
                         etLokasi.isEnabled = true
+                        ivPhotoBanner.setImageResource(R.drawable.null_image)
                         photoList.clear()
                     }
                 } else {
@@ -264,15 +275,6 @@ class AddDataActivity : AppCompatActivity(), PhotosAdapterAdd.OnPhotoDeleteLongC
             }
             photoList.clear()
         }
-    }
-
-    override fun onPhotoDeleteLongClick(position: Int) {
-        val deletedPhoto = photoList.removeAt(position)
-        deletedPhoto.let {
-            val deletedPhotoFile = File(it)
-            deletedPhotoFile.delete()
-        }
-        photoAdapter.notifyItemRemoved(position)
     }
 
     //Location Function

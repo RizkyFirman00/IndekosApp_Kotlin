@@ -279,7 +279,7 @@
                 app:boxStrokeColor="@color/purple"
                 app:boxStrokeWidth="2dp"
                 app:endIconMode="clear_text"
-                app:helperText="Silahkan klik tombol di kanan">
+                app:helperText="*SILAHKAN KLIK TOMBOL DI KANAN">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_lokasi"

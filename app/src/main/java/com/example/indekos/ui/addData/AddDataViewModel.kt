@@ -39,4 +39,6 @@ class AddDataViewModel(application: Application): ViewModel() {
         )
     }
 
+    fun getUsernamebyId(userId: Int) = userRepository.getUserById(userId)
+
 }
