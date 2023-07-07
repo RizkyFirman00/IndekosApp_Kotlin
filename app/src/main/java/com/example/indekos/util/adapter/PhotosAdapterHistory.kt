@@ -55,7 +55,7 @@ class PhotosAdapterHistory(private val photoList: MutableList<String>) :
         }
 
         override fun onMenuItemClick(item: MenuItem): Boolean {
-            return when (item?.itemId) {
+            return when (item.itemId) {
                 0 -> {
                     deletePhoto()
                     true

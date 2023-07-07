@@ -20,6 +20,7 @@ import com.example.indekos.databinding.DialogSetRadiusBinding
 import com.example.indekos.model.Indekos
 import com.example.indekos.ui.detail.DetailActivity
 import com.example.indekos.util.ViewModelFactory
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMapOptions
@@ -28,6 +29,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.Circle
 import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.coroutines.launch
 
@@ -36,6 +38,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
     private var circle: Circle? = null
+    private val markerList: MutableList<Marker> = mutableListOf()
     private var userLocation = LatLng(0.0, 0.0)
     private var radiusValue: Double = 3000.0
     private val viewModel by viewModels<MapsViewModel> {
@@ -94,6 +97,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         binding.btnSearch.setOnClickListener {
             searchLocation()
+        }
+
+        binding.btnMyLocation.setOnClickListener {
+            userCurrentLocation()
         }
 
         lifecycleScope.launch {
@@ -166,6 +173,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun filterIndekosByRadius() {
+        clearMarkers()
         val filteredIndekosList = viewModel.indekosList.value?.filter { indekos ->
             val indekosLocation = LatLng(
                 indekos.latitude_indekos ?: 0.0,
@@ -181,14 +189,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         if (filteredIndekosList.isNullOrEmpty()) {
             Toast.makeText(
                 this@MapsActivity,
-                "Tidak ada indekos dalam radius $radiusValue meter",
+                "Tidak ada indekos\ndalam radius $radiusValue meter",
                 Toast.LENGTH_SHORT
             ).show()
         } else {
             mMap.clear()
             Toast.makeText(
                 this@MapsActivity,
-                "Menampilkan ${filteredIndekosList.size} indekos dalam radius $radiusValue meter",
+                "Menampilkan ${filteredIndekosList.size} indekos\ndalam radius $radiusValue meter",
                 Toast.LENGTH_SHORT
             ).show()
             filteredIndekosList.forEach { indekos ->
@@ -201,8 +209,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         .position(indekosLocation)
                         .title(indekos.name_indekos)
                 )
-                marker?.snippet = "Harga : ${indekos.harga} / bulan"
-                marker?.tag = indekos.indekosId
+                if (marker != null) {
+                    markerList.add(marker)
+                    marker.snippet = "Harga : ${indekos.harga} / bulan"
+                    marker.tag = indekos.indekosId
+                }
             }
         }
     }
@@ -211,7 +222,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val locationName = binding.etSearch.text.toString()
         val geocoder = Geocoder(this)
         val addressList: MutableList<Address>? = geocoder.getFromLocationName(locationName, 1)
-        if (addressList != null) {
+        if (!addressList.isNullOrEmpty()) {
             val address = addressList[0]
             val latLng = LatLng(address.latitude, address.longitude)
             userLocation = latLng
@@ -219,7 +230,34 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             filterIndekosByRadius()
             updateCircleRadius(radiusValue)
         } else {
-            Toast.makeText(this, "Location not found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Lokasi tidak ditemukan", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun userCurrentLocation() {
+        val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
+                if (location != null) {
+                    val latLng = LatLng(location.latitude, location.longitude)
+                    userLocation = latLng
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+                    filterIndekosByRadius()
+                    updateCircleRadius(radiusValue)
+                } else {
+                    Toast.makeText(this, "Location not found", Toast.LENGTH_SHORT).show()
+                }
+            }
+        } else {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                1
+            )
         }
     }
 
@@ -227,5 +265,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra("indekosId", indekosId)
         startActivity(intent)
+    }
+
+    private fun clearMarkers() {
+        for (marker in markerList) {
+            marker.remove()
+        }
+        markerList.clear()
     }
 }

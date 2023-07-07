@@ -56,28 +56,30 @@ class DetailHistoryActivity : AppCompatActivity() {
 
         if (indekosId != null) {
             viewModel.getIndekosById(indekosId.toInt()).observe(this) {
-                binding.etNamaIndekos.setText(it.name_indekos)
-                binding.etHargaPerBulan.setText(it.harga)
-                binding.etJumlahBedroom.setText(it.jumlah_bedroom)
-                binding.etJumlahCupboard.setText(it.jumlah_cupboard)
-                binding.etJumlahKitchen.setText(it.jumlah_kitchen)
-                binding.etAlamat.setText(it.alamat)
-                binding.etKota.setText(it.kota)
-                binding.etProvinsi.setText(it.provinsi)
-                binding.etLokasi.setText("${it.latitude_indekos}, ${it.longitude_indekos}")
-                Glide.with(this)
-                    .load(it.photoBannerUrl)
-                    .into(binding.ivPhotoBanner)
-                file = File(it.photoBannerUrl)
-                it.photoUrl?.let { it1 -> photoList.addAll(it1) }
-                photoAdapter = PhotosAdapterHistory(photoList)
-                binding.rvPhotos.apply {
-                    layoutManager = LinearLayoutManager(
-                        this@DetailHistoryActivity,
-                        LinearLayoutManager.HORIZONTAL,
-                        false
-                    )
-                    adapter = photoAdapter
+                if (it != null) {
+                    binding.etNamaIndekos.setText(it.name_indekos)
+                    binding.etHargaPerBulan.setText(it.harga)
+                    binding.etJumlahBedroom.setText(it.jumlah_bedroom)
+                    binding.etJumlahCupboard.setText(it.jumlah_cupboard)
+                    binding.etJumlahKitchen.setText(it.jumlah_kitchen)
+                    binding.etAlamat.setText(it.alamat)
+                    binding.etKota.setText(it.kota)
+                    binding.etProvinsi.setText(it.provinsi)
+                    binding.etLokasi.setText("${it.latitude_indekos}, ${it.longitude_indekos}")
+                    Glide.with(this)
+                        .load(it.photoBannerUrl)
+                        .into(binding.ivPhotoBanner)
+                    file = File(it.photoBannerUrl)
+                    it.photoUrl?.let { it1 -> photoList.addAll(it1) }
+                    photoAdapter = PhotosAdapterHistory(photoList)
+                    binding.rvPhotos.apply {
+                        layoutManager = LinearLayoutManager(
+                            this@DetailHistoryActivity,
+                            LinearLayoutManager.HORIZONTAL,
+                            false
+                        )
+                        adapter = photoAdapter
+                    }
                 }
             }
         }

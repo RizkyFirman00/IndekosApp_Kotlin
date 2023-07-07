@@ -86,6 +86,16 @@
         map:layout_constraintEnd_toEndOf="parent"
         map:layout_constraintStart_toStartOf="parent" />
 
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btn_myLocation"
+        style="@style/Button_Style_purple"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/baseline_my_location_24_white"
+        map:layout_constraintBottom_toTopOf="@+id/btn_set_radius"
+        map:layout_constraintEnd_toEndOf="@+id/btn_set_radius" />
+
 <!--    <androidx.appcompat.widget.AppCompatImageButton-->
 <!--        android:id="@+id/btn_myLocation"-->
 <!--        style="@style/Button_Style_salem"-->

@@ -250,7 +250,7 @@ class AddDataActivity : AppCompatActivity() {
                         )
                         Log.d("AddDataActivity", "Banner: $file")
                     }
-
+                    photoList.clear()
                     Toast.makeText(this, "Data berhasil ditambahkan", Toast.LENGTH_SHORT).show()
 
                     binding.apply {
@@ -265,7 +265,6 @@ class AddDataActivity : AppCompatActivity() {
                         etLokasi.text?.clear()
                         etLokasi.isEnabled = true
                         ivPhotoBanner.setImageResource(R.drawable.null_image)
-                        photoList.clear()
                     }
                 } else {
                     Toast.makeText(this, "Lokasi tidak valid", Toast.LENGTH_SHORT).show()
