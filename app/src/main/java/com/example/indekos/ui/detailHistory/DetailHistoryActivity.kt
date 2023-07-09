@@ -97,6 +97,8 @@ class DetailHistoryActivity : AppCompatActivity() {
             val jumlahBedroom = binding.etJumlahBedroom.text.toString()
             val jumlahCupboard = binding.etJumlahCupboard.text.toString()
             val jumlahKitchen = binding.etJumlahKitchen.text.toString()
+            val newLatIndekos = binding.etLokasi.text.toString().split(",")[0].trim()
+            val newLongIndekos = binding.etLokasi.text.toString().split(",")[1].trim()
             val alamat = binding.etAlamat.text.toString()
             val kota = binding.etKota.text.toString()
             val provinsi = binding.etProvinsi.text.toString()
@@ -115,8 +117,8 @@ class DetailHistoryActivity : AppCompatActivity() {
                         jumlahBedroom,
                         jumlahCupboard,
                         jumlahKitchen,
-                        latIndekos,
-                        longIndekos,
+                        newLatIndekos.toDouble(),
+                        newLongIndekos.toDouble(),
                         alamat,
                         kota,
                         provinsi,
