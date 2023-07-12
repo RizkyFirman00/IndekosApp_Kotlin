@@ -276,7 +276,7 @@ class DetailHistoryActivity : AppCompatActivity() {
         val options = arrayOf<CharSequence>("Ambil dari kamera", "Ambil dari galeri")
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Pilih Metode Anda :")
-        builder.setItems(options) { dialog, item ->
+        builder.setItems(options) { _, item ->
             when {
                 options[item] == "Ambil dari kamera" -> {
                     startCameraPhotos()

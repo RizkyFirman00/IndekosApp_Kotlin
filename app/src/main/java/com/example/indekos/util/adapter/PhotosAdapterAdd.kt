@@ -33,8 +33,4 @@ class PhotosAdapterAdd(private val photoList: List<String>): RecyclerView.Adapte
         return photoList.size
     }
 
-    interface OnPhotoDeleteLongClickListener {
-        fun onPhotoDeleteLongClick(position: Int)
-    }
-
 }

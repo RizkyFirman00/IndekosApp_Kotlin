@@ -208,10 +208,12 @@ class AddDataActivity : AppCompatActivity() {
 
         // Button tambah foto indekos
         photoAdapter = PhotosAdapterAdd(photoList)
-        binding.rvPhotos.apply {
-            layoutManager = LinearLayoutManager(this@AddDataActivity, LinearLayoutManager.HORIZONTAL, false)
-            adapter = photoAdapter
-        }
+        binding.rvPhotos.layoutManager = LinearLayoutManager(
+            this,
+            LinearLayoutManager.HORIZONTAL,
+            false
+        )
+        binding.rvPhotos.adapter = photoAdapter
         binding.btnPhotosGallery.setOnClickListener {
             showPhotoSelectionDialog()
         }
@@ -226,9 +228,9 @@ class AddDataActivity : AppCompatActivity() {
             val kota = binding.etKota.text.toString()
             val provinsi = binding.etProvinsi.text.toString()
             val file = file.toString()
+            Log.d("TAG", "Photo: $photoList")
 
             if (namaIndekos.isNotEmpty() && hargaIndekos.isNotEmpty() && binding.etLokasi.text?.isNotEmpty() == true) {
-
                 if (latIndekos != null && longIndekos != null) {
                     userId?.toInt()?.let { id ->
                         viewModel.insertIndekos(
@@ -246,11 +248,7 @@ class AddDataActivity : AppCompatActivity() {
                             photoList,
                             file
                         )
-                        Log.d("AddDataActivity", "Banner: $file")
                     }
-                    photoList.clear()
-                    Toast.makeText(this, "Data berhasil ditambahkan", Toast.LENGTH_SHORT).show()
-
                     binding.apply {
                         etNamaIndekos.text?.clear()
                         etHargaPerBulan.text?.clear()
@@ -264,14 +262,38 @@ class AddDataActivity : AppCompatActivity() {
                         etLokasi.isEnabled = true
                         ivPhotoBanner.setImageResource(R.drawable.null_image)
                     }
+                    Toast.makeText(this, "Data berhasil ditambahkan", Toast.LENGTH_SHORT).show()
+                    photoList.clear()
+                    photoAdapter.notifyDataSetChanged()
                 } else {
                     Toast.makeText(this, "Lokasi tidak valid", Toast.LENGTH_SHORT).show()
                 }
             } else {
                 Toast.makeText(this, "Harap lengkapi data", Toast.LENGTH_SHORT).show()
             }
-            photoList.clear()
         }
+    }
+
+    // Rv Photo Function
+    private fun showPhotoSelectionDialog() {
+        val options = arrayOf<CharSequence>("Ambil dari kamera", "Ambil dari galeri")
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Pilih Metode Anda :")
+        builder.setItems(options) { _, item ->
+            when {
+                options[item] == "Ambil dari kamera" -> {
+                    startCameraPhotos()
+                }
+
+                options[item] == "Ambil dari galeri" -> {
+                    startGalleryPhotos()
+                }
+            }
+        }
+        builder.setNegativeButton("Cancel") { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.show()
     }
 
     //Location Function
@@ -423,28 +445,6 @@ class AddDataActivity : AppCompatActivity() {
             photoList.add(photoFilePath)
             photoAdapter.notifyDataSetChanged()
         }
-    }
-
-    // Rv Photo Function
-    private fun showPhotoSelectionDialog() {
-        val options = arrayOf<CharSequence>("Ambil dari kamera", "Ambil dari galeri")
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Pilih Metode Anda :")
-        builder.setItems(options) { dialog, item ->
-            when {
-                options[item] == "Ambil dari kamera" -> {
-                    startCameraPhotos()
-                }
-
-                options[item] == "Ambil dari galeri" -> {
-                    startGalleryPhotos()
-                }
-            }
-        }
-        builder.setNegativeButton("Cancel") { dialog, _ ->
-            dialog.dismiss()
-        }
-        builder.show()
     }
 
     companion object {
