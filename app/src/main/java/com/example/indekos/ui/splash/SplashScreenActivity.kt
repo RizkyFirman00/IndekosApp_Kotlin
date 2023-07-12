@@ -1,9 +1,8 @@
 package com.example.indekos.ui.splash
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.indekos.R
+import androidx.appcompat.app.AppCompatActivity
 import com.example.indekos.databinding.ActivitySplashScreenBinding
 import com.example.indekos.ui.home.HomeActivity
 import com.example.indekos.ui.login.LoginActivity

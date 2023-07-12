@@ -11,9 +11,7 @@ import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.View
 import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -22,7 +20,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.core.view.isNotEmpty
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -31,6 +28,7 @@ import com.example.indekos.databinding.ActivityAddDataBinding
 import com.example.indekos.ui.history.HistoryActivity
 import com.example.indekos.ui.home.HomeActivity
 import com.example.indekos.ui.login.LoginActivity
+import com.example.indekos.ui.splash.SplashScreenActivity
 import com.example.indekos.util.Preferences
 import com.example.indekos.util.ViewModelFactory
 import com.example.indekos.util.adapter.PhotosAdapterAdd
@@ -452,5 +450,10 @@ class AddDataActivity : AppCompatActivity() {
     companion object {
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
         private const val REQUEST_CODE_PERMISSIONS = 123
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(Intent(this, SplashScreenActivity::class.java))
     }
 }
