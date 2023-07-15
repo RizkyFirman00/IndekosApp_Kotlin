@@ -108,9 +108,9 @@ class HomeActivity : AppCompatActivity() {
         viewModel.indekosList.observe(this) { indekosList ->
             if (indekosList.isNullOrEmpty()) {
                 Toast.makeText(this, "Tidak ada data indekos", Toast.LENGTH_SHORT).show()
-                binding.tvNoData.visibility = View.VISIBLE
+                binding.progressBar2.visibility = View.VISIBLE
             } else {
-                binding.tvNoData.visibility = View.GONE
+                binding.progressBar2.visibility = View.GONE
                 adapter.submitList(indekosList)
             }
         }

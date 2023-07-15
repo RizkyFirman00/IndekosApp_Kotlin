@@ -25,11 +25,19 @@ class RegisterActivity : AppCompatActivity() {
             val username = binding.etUsername.text.toString()
             val password = binding.etPassword.text.toString()
 
-            viewModel.register(email, noTelp, username, password)
-            Toast.makeText(this, "Register berhasil", Toast.LENGTH_SHORT).show()
-            Intent(this, LoginActivity::class.java).also {
-                startActivity(it)
-                finish()
+            if (email.isEmpty() || noTelp.isEmpty() || username.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Mohon isi semua data", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            } else if (password.length < 6) {
+                Toast.makeText(this, "Password minimal 6 karakter", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            } else {
+                viewModel.register(email, noTelp, username, password)
+                Toast.makeText(this, "Register berhasil", Toast.LENGTH_SHORT).show()
+                Intent(this, LoginActivity::class.java).also {
+                    startActivity(it)
+                    finish()
+                }
             }
         }
 
