@@ -164,7 +164,17 @@ class HomeActivity : AppCompatActivity() {
         val c = 2 * atan2(sqrt(a), sqrt(1 - a))
         val distanceInKm = earthRadius * c
         val distanceInMeter = distanceInKm * 1000
-        return String.format("%.1f", distanceInMeter)
+        val formattedDistance = String.format("%.0f", distanceInMeter)
+        return addThousandSeparators(formattedDistance)
+    }
+
+    private fun addThousandSeparators(number: String): String {
+        val parts = number.split(".")
+        val integerPart = parts[0]
+        val decimalPart = if (parts.size > 1) ".${parts[1]}" else ""
+        val regex = "(\\d)(?=(\\d{3})+\$)".toRegex()
+        val formattedIntegerPart = integerPart.replace(regex, "$1.")
+        return "$formattedIntegerPart$decimalPart"
     }
 
     private fun updateIndekosList() {

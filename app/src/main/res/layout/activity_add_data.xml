@@ -61,6 +61,14 @@
 
         </RelativeLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Tambah Data Kosan,"
+            android:textSize="24sp" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -70,8 +78,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:fontFamily="@font/poppins_regular"
                 android:layout_marginEnd="8dp"
+                android:fontFamily="@font/poppins_regular"
                 android:text="Selamat Datang,"
                 android:textSize="16sp" />
 
@@ -81,18 +89,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:fontFamily="@font/poppins_bold"
-                tools:text="Username"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                tools:text="Username" />
 
         </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:fontFamily="@font/poppins_medium"
-            android:text="Tambah Data Kosan,"
-            android:textSize="24sp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
