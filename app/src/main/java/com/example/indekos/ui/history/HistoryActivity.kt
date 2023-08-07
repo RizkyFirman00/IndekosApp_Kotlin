@@ -43,7 +43,9 @@ class HistoryActivity : AppCompatActivity() {
         userId?.let { viewModel.getByUserId(it.toInt()) }
         viewModel.indekosList.observe(this) { indekosList ->
             if (indekosList.isNullOrEmpty()) {
-                binding.progressBar2.visibility = android.view.View.VISIBLE
+                binding.progressBar2.visibility = android.view.View.GONE
+                binding.tvDataKosong.visibility = android.view.View.VISIBLE
+
             } else {
                 binding.progressBar2.visibility = android.view.View.GONE
                 adapter.submitList(indekosList)

@@ -2,6 +2,7 @@ package com.example.indekos.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -33,7 +34,10 @@ interface IndekosDao {
     fun updateIndekos(indekos: Indekos)
 
     // Delete data indekos di DetailHistoryActivity
-    @Query("DELETE FROM indekos WHERE indekosId = :indekosId")
-    fun deleteIndekos(indekosId: Int)
+    @Delete
+    fun deleteIndekos(indekos: Indekos)
 
+    // Search Fungsi RV di AdminActivity
+    @Query("SELECT * FROM indekos WHERE name_indekos LIKE '%' || :query || '%'")
+    fun searchIndekos(query: String?): Flow<List<Indekos>>
 }

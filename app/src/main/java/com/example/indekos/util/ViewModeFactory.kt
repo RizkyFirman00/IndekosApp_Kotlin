@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.indekos.ui.addData.AddDataViewModel
+import com.example.indekos.ui.admin.AdminViewModel
 import com.example.indekos.ui.detail.DetailViewModel
-import com.example.indekos.ui.detailHistory.DetailHistoryActivity
 import com.example.indekos.ui.detailHistory.DetailHistoryViewModel
 import com.example.indekos.ui.history.HistoryViewModel
 import com.example.indekos.ui.home.HomeViewModel
@@ -46,6 +46,8 @@ class ViewModelFactory private constructor(private val mApplication: Application
             return DetailHistoryViewModel(mApplication) as T
         } else if (modelClass.isAssignableFrom(MapsViewModel::class.java)) {
             return MapsViewModel(mApplication) as T
+        } else if (modelClass.isAssignableFrom(AdminViewModel::class.java)) {
+            return AdminViewModel(mApplication) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
     }

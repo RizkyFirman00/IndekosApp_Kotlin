@@ -85,10 +85,7 @@ class DetailHistoryActivity : AppCompatActivity() {
         }
 
         binding.btnBack.setOnClickListener {
-            Intent(this, HistoryActivity::class.java).also {
-                startActivity(it)
-                finish()
-            }
+        finish()
         }
 
         binding.btnUpdateData.setOnClickListener {
@@ -135,12 +132,18 @@ class DetailHistoryActivity : AppCompatActivity() {
         }
 
         binding.btnDeleteData.setOnClickListener {
-            Toast.makeText(this, "Data berhasil dihapus", Toast.LENGTH_SHORT).show()
-            Intent(this, HistoryActivity::class.java).also {
-                startActivity(it)
-                finish()
+            val indekosId = intent.getStringExtra("indekosId")
+            indekosId?.let { id ->
+                val indekos = viewModel.getIndekosById(id.toInt()).value
+                indekos?.let {
+                    viewModel.deleteIndekos(it)
+                    Toast.makeText(this, "Data berhasil dihapus", Toast.LENGTH_SHORT).show()
+                    Intent(this, HistoryActivity::class.java).also {
+                        startActivity(it)
+                        finish()
+                    }
+                }
             }
-            indekosId?.let { viewModel.deleteIndekos(it.toInt()) }
         }
 
         // Button check lokasi

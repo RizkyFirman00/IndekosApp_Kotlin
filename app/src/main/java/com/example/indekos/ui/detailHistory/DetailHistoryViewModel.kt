@@ -2,7 +2,10 @@ package com.example.indekos.ui.detailHistory
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.indekos.model.Indekos
 import com.example.indekos.repository.UserRepository
+import kotlinx.coroutines.launch
 
 class DetailHistoryViewModel(application: Application): ViewModel() {
     private val userRepository = UserRepository(application)
@@ -43,7 +46,9 @@ class DetailHistoryViewModel(application: Application): ViewModel() {
 
     fun getIndekosById(indekosId: Int) = userRepository.getIndekosById(indekosId)
 
-    fun deleteIndekos(indekosId: Int) {
-        userRepository.deleteIndekos(indekosId)
+    fun deleteIndekos(indekos: Indekos) {
+        viewModelScope.launch {
+            userRepository.deleteIndekos(indekos)
+        }
     }
 }

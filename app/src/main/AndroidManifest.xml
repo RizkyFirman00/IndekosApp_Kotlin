@@ -25,12 +25,15 @@
         android:theme="@style/Theme.Indekos"
         tools:targetApi="31">
         <activity
+            android:name=".ui.admin.AdminActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.detailHistory.DetailHistoryActivity"
             android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyD3erc9tIt3G2KRWspglt61eGeYU4eX3zM" />
+            android:value="AIzaSyA1wxQrzDkx68zix-NLQ-85GHm0j5ZhkmU" />
 
         <activity
             android:name=".ui.map.MapsActivity"

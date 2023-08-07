@@ -7,7 +7,9 @@ import com.example.indekos.database.MyAppRoomDatabase
 import com.example.indekos.database.UserDao
 import com.example.indekos.model.Indekos
 import com.example.indekos.model.Users
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -85,6 +87,8 @@ class UserRepository(application: Application) {
 
     fun getIndekosByUserId(userId: Int): Flow<List<Indekos>> = _IndekosDao.getIndekosByUserId(userId)
 
+    fun searchIndekos(query: String?): Flow<List<Indekos>> = _IndekosDao.searchIndekos(query)
+
     fun updateIndekos(
         indekosId: Int,
         userId: Int,
@@ -123,9 +127,9 @@ class UserRepository(application: Application) {
         }
     }
 
-    fun deleteIndekos(indekosId: Int) {
-        executorService.execute {
-            _IndekosDao.deleteIndekos(indekosId)
+    suspend fun deleteIndekos(indekos: Indekos) {
+        withContext(Dispatchers.IO) {
+            _IndekosDao.deleteIndekos(indekos)
         }
     }
 }
